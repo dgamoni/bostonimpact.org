@@ -21,6 +21,10 @@ $alternate_menu_id = ! empty( $headerS['alternate_menu'] ) && is_numeric( $heade
 $alternate_menu_id = apply_filters( 'avf_alternate_mobile_menu_id', $alternate_menu_id, $headerS );
 
 $ogo = get_field('page_template', $post->ID);
+//var_dump($ogo);
+if ($ogo == null) {
+	$ogo = 'default-login';
+}
 
 if( isset( $headerS['disabled'] ) ) 
 {    
@@ -50,10 +54,25 @@ if($headerS['header_topbar'] == true)
 						//display icons
 			            if(strpos( $headerS['header_social'], 'extra_header_active') !== false) {
 			            	
-			            	//var_dump($ogo);
-			            	if( $ogo != "BII - IA") {
+			            	
+			            	// if (  is_page_template('template-page-default-login.php') ) {
+			            	// 	echo '<ul class="log_wrap"><li class="social_icon_3"><a href="'.home_url('login').'" class="log" target="_blank">login</a></li></ul>';
+			            	// } else if ( is_page_template('template-page-BII-IA.php') ) {
+
+			            	if ( $ogo == 'default-login' ) {
+
 			            		echo '<ul class="log_wrap"><li class="social_icon_3"><a href="'.home_url('login').'" class="log" target="_blank">login</a></li></ul>';
+			            	
+			            	} else if ( $ogo == 'bii-ia') {
+
+			            		echo '<ul class="log_wrap"><li class="social_icon_3"><a href="'.home_url('login').'" class="log" target="_blank">login</a></li></ul>';
+
+			            	} else if ( $ogo == 'default' ) {
+
+							} else if ( $ogo == 'bii-ia-nologin' ) {
+
 			            	}
+
 			            	echo $icons;
 			            }
 					
@@ -142,12 +161,30 @@ if($headerS['header_topbar'] == true)
 						
 						
 						//var_dump($ogo);
-						if( $ogo == "BII - IA") {
-							//$addition2 = "<img src='".wp_get_upload_dir()->baseurl."/2019/02/BII_Logo_GuideOnly_220x165.png' class='alternate' alt='' title='' />";
-							$output .= '<span class="logo"><a href="https://bostonimpact.org/impact-assessment-guide"><img height="100" width="300" src="https://bostonimpact.org/wp-content/uploads/2019/02/BII_Logo_GuideOnly_220x165.png" alt="Boston Impact Initiative Fund"></a></span>';
-						} else {
-							$output .= avia_logo(AVIA_BASE_URL.'images/layout/logo.png', $addition, 'span', true);
-						}
+						// if( $ogo == "BII - IA") {
+						// 	//$addition2 = "<img src='".wp_get_upload_dir()->baseurl."/2019/02/BII_Logo_GuideOnly_220x165.png' class='alternate' alt='' title='' />";
+						// 	$output .= '<span class="logo"><a href="https://bostonimpact.org/impact-assessment-guide"><img height="100" width="300" src="https://bostonimpact.org/wp-content/uploads/2019/02/BII_Logo_GuideOnly_220x165.png" alt="Boston Impact Initiative Fund"></a></span>';
+						// } else {
+						// 	$output .= avia_logo(AVIA_BASE_URL.'images/layout/logo.png', $addition, 'span', true);
+						// }
+
+			            	if ( $ogo == 'default-login' ) {
+
+			            		$output .= avia_logo(AVIA_BASE_URL.'images/layout/logo.png', $addition, 'span', true);
+			            	
+			            	} else if ( $ogo == 'bii-ia') {
+
+			            			$output .= '<span class="logo"><a href="https://bostonimpact.org/impact-assessment-guide"><img height="100" width="300" src="https://bostonimpact.org/wp-content/uploads/2019/02/BII_Logo_GuideOnly_220x165.png" alt="Boston Impact Initiative Fund"></a></span>';
+
+			            	} else if ( $ogo == 'default' ) {
+
+			            		$output .= avia_logo(AVIA_BASE_URL.'images/layout/logo.png', $addition, 'span', true);
+
+							} else if ( $ogo == 'bii-ia-nologin' ) {
+
+									$output .= '<span class="logo"><a href="https://bostonimpact.org/impact-assessment-guide"><img height="100" width="300" src="https://bostonimpact.org/wp-content/uploads/2019/02/BII_Logo_GuideOnly_220x165.png" alt="Boston Impact Initiative Fund"></a></span>';
+			            	
+			            	}						
 						
 							if(!empty($headerS['bottom_menu']))
 							{
@@ -199,9 +236,16 @@ if($headerS['header_topbar'] == true)
 						            'walker' 			=> new avia_responsive_mega_menu()
 						        );
 								
-								if( $ogo == "BII - IA") {
+								
+				            	if ( $ogo == 'default-login' || $ogo == 'default' ) {
+				            		
+				            	} else if ( $ogo == 'bii-ia' || $ogo == 'bii-ia-nologin' ) {
 									$args['menu'] = '73';
-								}
+				            	} 
+
+								// if( $ogo == "BII - IA") {
+								// 	$args['menu'] = '73';
+								// }
 						        $wp_main_nav = wp_nav_menu($args);
 						        $main_nav .= $wp_main_nav;
 						        
@@ -278,9 +322,15 @@ if($headerS['header_topbar'] == true)
 							'walker' 			=> new avia_responsive_mega_menu()
 						);
 
-			if( $ogo == "BII - IA") {
-				$args['menu'] = '73';
-			}
+		            	if ( $ogo == 'default-login' || $ogo == 'default' ) {
+		            		
+		            	} else if ( $ogo == 'bii-ia' || $ogo == 'bii-ia-nologin' ) {
+							$args['menu'] = '73';
+		            	}
+
+			// if( $ogo == "BII - IA") {
+			// 	$args['menu'] = '73';
+			// }
 								
 			$wp_nav_alternate = wp_nav_menu( $args );
 			
